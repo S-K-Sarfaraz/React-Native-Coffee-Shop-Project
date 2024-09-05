@@ -1,4 +1,4 @@
-import { ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { FlatList, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { useStore } from '../store/store'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -6,6 +6,7 @@ import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/th
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import HeaderBar from '../components/HeaderBar';
 import CustomIcon from '../components/CustomIcon';
+import CoffeeCard from '../components/CoffeeCard';
 
 const getCategoryFromData = (data: any) => {
   let temp: any = {};
@@ -23,7 +24,7 @@ const getCategoryFromData = (data: any) => {
 };
 
 const getcoffeeList = (category: any, data:any) => {
-  if (category = "All") {
+  if (category === "All") {
     return data;
   } else {
     let coffeelist = data.filter((item:any) => item.name == category);
@@ -86,10 +87,17 @@ const Homescreen = () => {
               <View key={index.toString()} style={styles.CategoryScrollViewContiner}>
                 <TouchableOpacity 
                 style={styles.CategoryScrollViewItem}
-                onPress={() => {}}>
+                onPress={() => {
+                  setCategoryIndex({index: index, category: categories[index]})
+                  setSortedCoffee([
+                    ...getcoffeeList(categories[index], CoffeeList)
+                  ])
+                }}>
                   <Text style={[
                     styles.CategoryTextActive,
-                    categoryIndex.index == index ? {} : {}
+                    categoryIndex.index == index ? {
+                      color: COLORS.primaryOrangeHex
+                    } : {}
                     ]}>{data}</Text>
                   {categoryIndex.index == index? <View style={styles.ActiveCategory}/> : <></>}
                 </TouchableOpacity>
@@ -97,6 +105,36 @@ const Homescreen = () => {
             ))
           }
         </ScrollView>
+
+        {/* Coffee Flatlist */}
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={sortedCoffee}
+          contentContainerStyle={styles.FlatListContainer}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity>
+                <CoffeeCard 
+                  name={item.name}
+                  imagelink_square={item.imagelink_square}
+                  buttonPressHandler={() => {}}
+                  id={item.id}
+                  index={item.index}
+                  type={item.type}
+                  average_rating={item.average_rating}
+                  price={item.prices[2]}
+                  special_ingredient={item.special_ingredient}
+                  roasted={item.roasted}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        />  
+
+
+        {/* Beans Flatlist */}
 
       </ScrollView>
     </View>
@@ -167,6 +205,11 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.space_4
   },
 
+  FlatListContainer:{
+    gap: SPACING.space_20,
+    paddingVertical: SPACING.space_20,
+    paddingHorizontal: SPACING.space_30,
+  }
 })
 
 export default Homescreen
