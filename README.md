@@ -8,7 +8,7 @@
 This function `getCategoryFromData` takes an array of objects as input and returns an array of unique category names. It also adds an "All" category at the beginning of the array.
 
 In essence, it groups the input data by a "name" property and returns the distinct names as categories.
-```
+```javascript
 const getCategoryFromData = (data: any) => {
   let temp: any = {};
   for(let i = 0; i < data.length; i++) {
