@@ -30,7 +30,7 @@ const getCategoryFromData = (data: any) => {
 
 This function, `getcoffeeList`, filters a list of coffee data based on a specified category. If the category is "All", it returns the entire list. Otherwise, it returns a subset of the list where the coffee name matches the specified category. 
 
-```
+```javascript
 const getcoffeeList = (category: any, data:any) => {
   if (category === "All") {
     return data;
@@ -52,7 +52,7 @@ The function first checks if the `search` string is not empty. If it's not empty
 
 In summary, this function performs a search operation based on the `search` string and updates the state accordingly.
 
-```
+```javascript
 const searchCoffee = (search: string) => {
     if(search != '') {
       ListRef?.current?.scrollToOffset({animated: true, offset: 0})
@@ -78,7 +78,7 @@ This code snippet defines a function called `resetSearchCoffee`. When this funct
 
 Overall, this function is used to reset the search functionality in a coffee shop app by resetting the scroll position, category selection, and search text.
 
-```
+```javascript
 const resetSearchCoffee = () => {
     ListRef?.current?.scrollToOffset({animated: true, offset: 0})
     setCategoryIndex({
@@ -105,7 +105,7 @@ This code snippet is an `addToCart` function that adds an item to a shopping car
 
 This function uses the `produce` function from the `immer` library to immutably update the state.
 
-```
+```typescript
 addToCart: (cartItem: any) => set(produce((state: any) => {
     let found = false;
     for(let i = 0; i < state.CartList.length; i++){
@@ -152,7 +152,7 @@ Here's a breakdown of what the code does:
 
 Overall, this code calculates the total price of all items in the shopping cart and updates the state accordingly.
 
-```
+```typescript
 CalculateCartPrice: () => set(produce(state => {
     let totalPrice = 0;
     for(let i = 0; i < state.CartList.length; i++){
@@ -173,7 +173,7 @@ CalculateCartPrice: () => set(produce(state => {
 
 This code adds an item to the `FavoritesList` if it's not already a favorite. It takes two parameters: `type` (either 'Coffee' or 'Bean') and `id`. It iterates through the corresponding list (either `CoffeeList` or `BeanList`) to find the item with the matching `id`, sets its `favourite` property to `true`, and adds it to the beginning of the `FavoritesList`.
 
-```
+```typescript
 addToFavoritesList: (type: any, id: any) => set(produce((state: any) => {
     if(type == 'Coffee'){
         for(let i = 0; i < state.CoffeeList.length; i++){
@@ -206,7 +206,7 @@ addToFavoritesList: (type: any, id: any) => set(produce((state: any) => {
 
 This code snippet removes an item from the `FavoritesList` by its `id` and type (`'Coffee'` or `'Bean'`). It first finds the item in the corresponding list (`CoffeeList` or `BeanList`) and sets its `favourite` property to `false`. Then, it finds the item in the `FavoritesList` by its `id` and removes it using the `splice` method.
 
-```
+```typescript
 deleteFromFavoritesList: (type: string, id: string) => set(produce((state) => {
     if(type == 'Coffee'){
         for(let i = 0; i < state.CoffeeList.length; i++){
